@@ -1,0 +1,30 @@
+.hidden {
+  display: none;
+}
+
+.basic-padding {
+  padding: 25px 0;
+}
+
+.btn {
+  font-size: 16px;
+  background-color: black;
+  color: white;
+  font-weight: 400;
+  padding: 15px 35px;
+  border-radius: 7px;
+  border: 1px solid black;
+}
+
+.btn:hover {
+  background-color: #0b7381;
+  border: 1px solid #0b7381;
+  color: white;
+  -webkit-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+}
+
+.activeBtn {
+  background-color: blue;
+}
+/*# sourceMappingURL=style.css.map */
