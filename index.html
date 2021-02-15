@@ -2,32 +2,59 @@
 <html>
  <head>
 <link rel="stylesheet" type="text/css" href="style.css" ></link>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
  </head>
 <body>
 
-<div id="buttons">
-    <button id="startBtn">START</button>
+<div class="containerInner w3-white">
+
+    <div id="introHome">
+
+        <div class="introHome-logo">
+            <img src="images/logo-stemwijzer.svg">
+        </div>
+
+        <div class="introHome-text">
+            <h1>
+                Stemwijzer tweede kamer 2017
+            </h1>
+
+            <h2>
+                Test uw politieke voorkeur aan de hand van 30 stellingen
+            </h2>
+        </div>    
+    </div>
+
+    <div id="buttons">
+        <button id="startBtn">Start</button>
+    </div>
+
+
+    <div id="container" class="hidden">
+        <h1 id="title">title</h1>
+        <p id="statement">statement</p>
+    </div>
+
+    <div id="choiceButtons" class="hidden basic-padding">
+        <button id="agreeBtn" class="btn">Eens</button>
+        <button id="neitherBtn" class="btn">Geen van beide</button>
+        <button id="disagreeBtn" class="btn">Oneens</button>
+    </div>
+
+    <div id ="returnButton" class="hidden">
+        <i class="fas fa-arrow-circle-left" id="returnBtn"></i>
+    </div>
+
+    <div id="skipStatement" class="hidden">
+        <button id="skip" class="">Overslaan<i class="fas fa-arrow-right"></i></button>
+    </div>
+
 </div>
-
-
-<div id="container" class="hidden">
-<h1 id="title">title</h1>
-<p id="statement">statement</p>
-</div>
-
-<div id="choiceButtons" class="hidden basic-padding">
-    <button id="agreeBtn" class="btn">EENS</button>
-    <button id="neitherBtn" class="btn">GEEN VAN BEIDE</button>
-    <button id="disagreeBtn" class="btn">ONEENS</button>
-</div>
-
-<div id ="returnButton" class="hidden">
-    <button id="returnBtn" class="btn">GA TERUG NAAR VORIGE VRAAG</button>
-</div>
-
-
 
 </body>
 <script src="stemwijzer.js"></script>
 <script src="http://stemwijzer.dvc-icta.nl/testdata.js"></script>
+<script src="https://kit.fontawesome.com/3df4c7171e.js" crossorigin="anonymous"></script>
 </html>

@@ -1,18 +1,21 @@
 
 let currentSubject = 0;
 
+
+const introHome = document.getElementById("introHome");
 const startButton = document.getElementById("startBtn");
 const titleHeader = document.getElementById("title");
 const statementPara = document.getElementById("statement");
 const choiceBtns = document.getElementById("choiceButtons");
 const backBtn = document.getElementById("returnButton");
 const nextButton = document.getElementById("nextBtn");
-
+const skipStatement = document.getElementById("skipStatement");
 
 
 startButton.onclick = clickStartBtn;
 choiceBtns.onclick = nextStatement;
 backBtn.onclick = previousStatement;
+skipStatement.onclick = skipStatements;
 
 
 
@@ -39,6 +42,8 @@ function clickStartBtn(){
     hide(startButton);
     show(choiceBtns);
     show(backBtn);
+    hide(introHome);
+    show(skipStatement);
 
 
     titleHeader.innerHTML = subjects[currentSubject].title;
@@ -65,6 +70,17 @@ function previousStatement(){
         statementPara.innerHTML = subjects[currentSubject].statement;        
     } else {
         currentSubject ++
+    }
+    console.log(subjects[currentSubject].title);
+}
+
+function skipStatements(){
+    currentSubject++
+    if(currentSubject < subjects.length){
+        titleHeader.innerHTML = subjects[currentSubject].title;
+        statementPara.innerHTML = subjects[currentSubject].statement;     
+    } else {
+        currentSubject--
     }
     console.log(subjects[currentSubject].title);
 }
