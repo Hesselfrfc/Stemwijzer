@@ -20,10 +20,13 @@ body{
 }
 
 .containerInner{
-    max-width: 900px;
+    max-width: 1080px;
     margin: 0 auto;
     padding: 50px 75px;
     position: relative;
+    margin-top: 15px;
+    border-radius: 7px;
+    height: 400px;
 }
 
 .introHome{
@@ -64,6 +67,7 @@ body{
 }
 
 #skipStatement{
+    width: fit-content;
 
     #skip{
         background: transparent;
@@ -112,8 +116,8 @@ button{
 
     &#agreeBtn{
         &:hover{
-        background-color: $green;
-        border: 1px solid $green;
+            background-color: $green;
+            border: 1px solid $green;
         }
     }
 

@@ -13,10 +13,13 @@ body {
 }
 
 .containerInner {
-  max-width: 900px;
+  max-width: 1080px;
   margin: 0 auto;
   padding: 50px 75px;
   position: relative;
+  margin-top: 15px;
+  border-radius: 7px;
+  height: 400px;
 }
 
 .introHome-logo img {
@@ -46,6 +49,12 @@ body {
   color: #018aa9;
   -webkit-transform: translateX(-5px);
           transform: translateX(-5px);
+}
+
+#skipStatement {
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
 }
 
 #skipStatement #skip {
