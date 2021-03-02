@@ -19,7 +19,9 @@ body {
   position: relative;
   margin-top: 15px;
   border-radius: 7px;
-  height: 400px;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
 }
 
 .introHome-logo img {

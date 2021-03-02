@@ -1,39 +1,14 @@
-var parties = [
-    {
-       name: "PVV",
-       secular: true,
-       size: 20,
-       long: "Partij voor de Vrijheid"
-     },
-     {
-       name: "D66",
-       secular: true,
-       size: 19,
-       long: "Democratie 66"
-     },
-     {
-       name: "CU",
-       secular: false,
-       size: 6,
-       long: 'Christen Unie'
-     },
-     {
-       name: "SP",
-       secular: true,
-       size: 14,
-       long: "Socialistische Partij"
-     }
-   ];
 
 
 let currentSubject = 0;
 
 parties.forEach(party => {
     party.points = 0;
-
 });
 
-
+subjects.forEach(subject => {
+    subject.myAnswer = '';
+});
 
 const introHome = document.getElementById("introHome");
 const startButton = document.getElementById("startBtn");
@@ -47,6 +22,8 @@ const seeResults = document.getElementById("checkResults");
 var agreeButton = document.getElementById("agreeBtn");
 var neitherButton = document.getElementById("neitherBtn");
 var disagreeButton = document.getElementById("disagreeBtn");
+var uitslagen = document.getElementById("uitslagen");
+var partijen = document.getElementById("partijen");
 
 
 
@@ -56,7 +33,7 @@ skipStatement.onclick = skipStatements;
 agreeButton.onclick = agree;
 neitherButton.onclick = neither;
 disagreeButton.onclick = disagree;
-seeResults.onclick = result;
+seeResults.onclick = resultCalc;
 
 
 
@@ -119,6 +96,7 @@ function skipStatements(){
 function agree(){
     choice("pro");
     if ((subjects.length -1) == currentSubject){
+        calculate();
 
     } else {
         currentSubject ++;
@@ -132,6 +110,7 @@ function agree(){
 function neither(){
     choice("none");
     if ((subjects.length -1) == currentSubject){
+        calculate();
     } else {
         currentSubject ++;
         titleHeader.innerHTML = subjects[currentSubject].title;
@@ -144,6 +123,7 @@ function neither(){
 function disagree(){
     choice("contra");
     if ((subjects.length -1) == currentSubject){
+        calculate();
 
     } else {
         currentSubject ++;
@@ -159,23 +139,23 @@ function choice(insert){
     subjects[currentSubject].myAnswer = insert;
     console.log(subjects[currentSubject].myAnswer);
 
-    rekenen();
 }
 
 
 
-function rekenen(){
+function calculate(){
 
-    for (i = 0; i < subjects[currentSubject].parties.length; i ++){
-
-            if(subjects[currentSubject].parties[i].position == subjects[currentSubject].myAnswer){
-                for(x = 0; x < parties.length; x++){
-                    if(subjects[currentSubject].parties[i].name == parties[x].name){
-                        console.log(parties[x].name);
-                    }
-                }
+    subjects.forEach(subject => {
+        subject.parties.forEach(function(partyPar, partyIndex){
+            if(subject.myAnswer == subject.parties[partyIndex].position){
+                var scoreParty = parties.find(party => party.name == subject.parties[partyIndex].name);
+                scoreParty.points+=1;
             }
-    } 
+        });
+        
+    });
+    console.log(parties);
+    result();
 }
 
 
@@ -188,5 +168,21 @@ function result(){
 
 }
 
+function resultCalc(){
+    hide(seeResults);
+    show(uitslagen);
 
+    parties.sort(function (a, b) {
+        return b.points - a.points;
+    });
+    console.log(parties);
+
+    parties.forEach(party => {
+
+       var percentage = 100 / subjects.length * party.points;
+       var afronden = percentage.toFixed();
+        partijen.innerHTML += party.name + " "  + afronden +  "%" + "</br>";
+    });
+
+}
 
