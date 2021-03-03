@@ -4,6 +4,9 @@ $txt_accent1 : #01B4DC;
 $green : #20a84b;
 $red : #eb2045;
 $lightgrey : #e7eaeb;
+$orange : #FF8C00;
+$purple : #9932CC;
+$darkred : #8B0000;		
 
 body{
     background-image: url("images/tweedekamerbg.jpg");
@@ -27,6 +30,10 @@ body{
     margin-top: 15px;
     border-radius: 7px;
     height: fit-content;
+}
+
+.activeBtn{
+    background-color: lightgreen;
 }
 
 .introHome{
@@ -126,5 +133,58 @@ button{
             background-color: $red;
             border: 1px solid $red;
         }
+    }
+
+    &#secular{
+        &:hover{
+            background-color: $orange;
+            border: 1px solid $orange;
+            color: $black;
+        }
+
+        &:active{
+            background-color: $orange;
+            border: 1px solid $orange;
+            color: $black;
+        }
+    }
+
+    &#all{
+        &:hover{
+            background-color: $purple;
+            border: 1px solid $purple;
+            color: $white;
+        }
+    }
+
+    &#big{
+        &:hover{
+            background-color: $darkred;
+            border: 1px solid $darkred;
+            color: $white;
+        }
+    }
+}
+
+.filterButton{
+    width: 100%;
+    margin-top: 50px;
+
+    &#secular{
+        background-color: $orange;
+        border: 1px solid $orange;
+        color: $black;
+    }
+
+    &#all{
+        background-color: $purple;
+        border: 1px solid $purple;
+        color: $white;
+    }
+
+    &#big{
+        background-color: $darkred;
+        border: 1px solid $darkred;
+        color: $white;
     }
 }
