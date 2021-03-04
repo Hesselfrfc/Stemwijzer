@@ -261,7 +261,12 @@ function resultCalc(){
 
     
     partyResults.forEach(party => {
-            partijen.innerHTML+=party.name + "" + "</br>";      
+        var percentage = 100 / subjects.length * party.points;
+        if (percentage > 100){
+            var percentage = 100;
+        }
+        var p = percentage.toFixed(0);
+            partijen.innerHTML+=party.name + " " + p + "%" + "</br>";      
     });
 
 }
