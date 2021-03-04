@@ -25,7 +25,7 @@ body {
 }
 
 .activeBtn {
-  background-color: lightgreen;
+  background-color: #01B4DC;
 }
 
 .introHome-logo img {
@@ -115,30 +115,6 @@ button#disagreeBtn:hover {
   border: 1px solid #eb2045;
 }
 
-button#secular:hover {
-  background-color: #FF8C00;
-  border: 1px solid #FF8C00;
-  color: black;
-}
-
-button#secular:active {
-  background-color: #FF8C00;
-  border: 1px solid #FF8C00;
-  color: black;
-}
-
-button#all:hover {
-  background-color: #9932CC;
-  border: 1px solid #9932CC;
-  color: white;
-}
-
-button#big:hover {
-  background-color: #8B0000;
-  border: 1px solid #8B0000;
-  color: white;
-}
-
 .filterButton {
   width: 100%;
   margin-top: 50px;
@@ -160,5 +136,10 @@ button#big:hover {
   background-color: #8B0000;
   border: 1px solid #8B0000;
   color: white;
+}
+
+#home:hover {
+  text-decoration: underline;
+  cursor: pointer;
 }
 /*# sourceMappingURL=style.css.map */

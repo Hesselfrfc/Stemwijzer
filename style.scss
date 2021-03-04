@@ -33,7 +33,7 @@ body{
 }
 
 .activeBtn{
-    background-color: lightgreen;
+    background-color: $txt_accent1;
 }
 
 .introHome{
@@ -134,36 +134,6 @@ button{
             border: 1px solid $red;
         }
     }
-
-    &#secular{
-        &:hover{
-            background-color: $orange;
-            border: 1px solid $orange;
-            color: $black;
-        }
-
-        &:active{
-            background-color: $orange;
-            border: 1px solid $orange;
-            color: $black;
-        }
-    }
-
-    &#all{
-        &:hover{
-            background-color: $purple;
-            border: 1px solid $purple;
-            color: $white;
-        }
-    }
-
-    &#big{
-        &:hover{
-            background-color: $darkred;
-            border: 1px solid $darkred;
-            color: $white;
-        }
-    }
 }
 
 .filterButton{
@@ -186,5 +156,12 @@ button{
         background-color: $darkred;
         border: 1px solid $darkred;
         color: $white;
+    }
+}
+
+#home{
+    &:hover{
+        text-decoration: underline;
+        cursor: pointer;
     }
 }

@@ -1,7 +1,7 @@
 
 let currentSubject = 0;
 var partyResults = [];
-var partySize = 10;
+var partySize = 9;
 
 parties.forEach(party => {
     party.points = 0;
@@ -26,15 +26,16 @@ const importantStatement = document.getElementById("important");
 const filterSecular = document.getElementById("secular");
 const filterAll = document.getElementById("all");
 const filterBig = document.getElementById("big");
-var agreeButton = document.getElementById("agreeBtn");
-var neitherButton = document.getElementById("neitherBtn");
-var disagreeButton = document.getElementById("disagreeBtn");
-var uitslagen = document.getElementById("uitslagen");
-var partijen = document.getElementById("partijen");
-var buttons = document.getElementsByClassName("btn");
+const agreeButton = document.getElementById("agreeBtn");
+const neitherButton = document.getElementById("neitherBtn");
+const disagreeButton = document.getElementById("disagreeBtn");
+const uitslagen = document.getElementById("uitslagen");
+const partijen = document.getElementById("partijen");
+const buttons = document.getElementsByClassName("btn");
+const home = document.getElementById("home");
 
 
-
+home.onclick = returnHome;
 startButton.onclick = clickStartBtn;
 backBtn.onclick = previousStatement;
 skipStatement.onclick = skipStatements;
@@ -45,7 +46,6 @@ calcRes.onclick = resultCalc;
 filterSecular.onclick = getSecularParties;
 filterAll.onclick = getAllParties;
 filterBig.onclick = getBigParties;
-
 
 
 
@@ -86,6 +86,7 @@ function clickStartBtn(){
 function displayStatament(){
     titleHeader.innerHTML = subjects[currentSubject].title;
     statementPara.innerHTML = subjects[currentSubject].statement;
+
 }
 
 // go to previous statement on button click
@@ -107,6 +108,10 @@ function skipStatements(){
     } else {
         currentSubject--
         rememberChoice(subjects[currentSubject].myAnswer);
+    }
+
+    if ((subjects.length -1) == currentSubject){
+        calculate();
     }
     console.log(currentSubject);
 }
@@ -195,7 +200,11 @@ function getSecularParties() {
 
     partyResults = parties.filter(party => {
         return party.secular == true;
-    });   
+    });  
+    
+    activeButton(secular);
+    removeActiveButton(all);
+    removeActiveButton(big);
 }
 
 
@@ -205,6 +214,9 @@ function getAllParties() {
 
     partyResults = parties;
 
+    activeButton(all);
+    removeActiveButton(big);
+    removeActiveButton(secular);
 }
 
 // this function selects all parties that are "big". This value is set within a var on row 4
@@ -215,6 +227,10 @@ function getBigParties() {
         return party.size >= partySize;
     });
 
+    activeButton(big);
+    removeActiveButton(secular);
+    removeActiveButton(all);
+
 }
 
 
@@ -224,6 +240,7 @@ function result(){
     hide(skipStatement);
     hide(choiceBtns);
     show(seeResults);
+    hide(backBtn);
    
     parties.sort(function (a, b) {
         return b.points - a.points;
@@ -240,10 +257,16 @@ function resultCalc(){
 
     hide(seeResults);
     show(uitslagen);
+    hide(backBtn);
 
     
     partyResults.forEach(party => {
-            partijen.innerHTML+=party.long + "" + "</br>";      
+            partijen.innerHTML+=party.name + "" + "</br>";      
     });
 
+}
+
+
+function returnHome(){
+    location.reload();
 }
