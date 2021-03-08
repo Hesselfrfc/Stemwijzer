@@ -90,7 +90,7 @@ function displayStatament(){
 }
 
 // go to previous statement on button click
-function previousStatement(){
+function previousStatement(){  
     currentSubject--
     if(currentSubject >=0){
         displayStatament();    
@@ -159,11 +159,9 @@ function disagree(){
 
 // this function creates an array which will be stored with your answers
 function choice(insert){
-
     subjects[currentSubject].myAnswer = insert;
     subjects[currentSubject].important = importantStatement.checked;
     console.log(subjects[currentSubject].myAnswer);
-
 }
 
 // this function checks if the statement is set on "important"
@@ -180,9 +178,9 @@ function rememberChoice(){
 function calculate(){
 
     subjects.forEach(subject => {
-        subject.parties.forEach(function(partyPar, partyIndex){
-            if(subject.myAnswer == subject.parties[partyIndex].position){
-                var scoreParty = parties.find(party => party.name == subject.parties[partyIndex].name);
+        subject.parties.forEach(function(partyPar){
+            if(subject.myAnswer == partyPar.position){
+                var scoreParty = parties.find(party => party.name == partyPar.name);
                 if(subject.important == true) {
                     scoreParty.points+=2;
                 }else {
@@ -230,7 +228,6 @@ function getBigParties() {
     activeButton(big);
     removeActiveButton(secular);
     removeActiveButton(all);
-
 }
 
 
@@ -252,7 +249,7 @@ function result(){
 // this function lets you choose between the 3 filter options and shows the result of the filtered parties
 function resultCalc(){
     if(partyResults.length == 0) {
-        return alert('Kies uit de drie knoppen');
+        return alert('Kies uit de drie onderstaande knoppen om je resultaat te zien');
     }
 
     hide(seeResults);
@@ -263,11 +260,12 @@ function resultCalc(){
     partyResults.forEach(party => {
         var percentage = 100 / subjects.length * party.points;
         if (percentage > 100){
-            var percentage = 100;
+             var percentage = 100 / subjects.length * party.points / 2;
         }
         var p = percentage.toFixed(0);
             partijen.innerHTML+=party.name + " " + p + "%" + "</br>";      
     });
+
 
 }
 
