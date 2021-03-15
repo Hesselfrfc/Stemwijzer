@@ -8,7 +8,6 @@ parties.forEach(party => {
 });
 
 subjects.forEach(subject => {
-    subject.myAnswer = '';
     subject.important = false;
 });
 
@@ -26,9 +25,9 @@ const importantStatement = document.getElementById("important");
 const filterSecular = document.getElementById("secular");
 const filterAll = document.getElementById("all");
 const filterBig = document.getElementById("big");
-const agreeButton = document.getElementById("agreeBtn");
-const neitherButton = document.getElementById("neitherBtn");
-const disagreeButton = document.getElementById("disagreeBtn");
+const agreeButton = document.getElementById("pro");
+const neitherButton = document.getElementById("none");
+const disagreeButton = document.getElementById("contra");
 const uitslagen = document.getElementById("uitslagen");
 const partijen = document.getElementById("partijen");
 const buttons = document.getElementsByClassName("btn");
@@ -39,13 +38,19 @@ home.onclick = returnHome;
 startButton.onclick = clickStartBtn;
 backBtn.onclick = previousStatement;
 skipStatement.onclick = skipStatements;
-agreeButton.onclick = agree;
-neitherButton.onclick = neither;
-disagreeButton.onclick = disagree;
 calcRes.onclick = resultCalc;
 filterSecular.onclick = getSecularParties;
 filterAll.onclick = getAllParties;
 filterBig.onclick = getBigParties;
+agreeButton.onclick = (event) => {
+    processAnswer("pro");
+};
+neitherButton.onclick = (event) => {
+    processAnswer("none");
+};
+disagreeButton.onclick = (event) => {
+    processAnswer("contra");
+};
 
 
 
@@ -59,14 +64,6 @@ function hide(element){
     element.classList.add("hidden");
 }
 
-//add active class
-function activeButton(element){
-    element.classList.add("activeBtn");
-}
-
-function removeActiveButton(element){
-    element.classList.remove("activeBtn");
-}
 
 //show subjects title and statement instead of default text
 function clickStartBtn(){
@@ -83,10 +80,29 @@ function clickStartBtn(){
     statementPara.innerHTML = subjects[currentSubject].statement;
 }
 
+// this function displays the title and the statement of the current subject
 function displayStatament(){
     titleHeader.innerHTML = subjects[currentSubject].title;
     statementPara.innerHTML = subjects[currentSubject].statement;
+    // color buttons toevoegen bij teruggaan vraag
+    colorBtn();
 
+}
+
+//this function checks if subjects[currentSubject].myAnswer has a value, if true
+// the class remember button will be removed on all buttons, then it will add
+// the class remember button to a match between myAnswer and the id of the button
+function colorBtn(){
+    if(subjects[currentSubject].myAnswer){
+        agreeButton.classList.remove("remember-btn");
+        neitherButton.classList.remove("remember-btn");
+        disagreeButton.classList.remove("remember-btn");
+        document.getElementById(subjects[currentSubject].myAnswer).classList.add("remember-btn");
+    }else{
+        agreeButton.classList.remove("remember-btn");
+        neitherButton.classList.remove("remember-btn");
+        disagreeButton.classList.remove("remember-btn");
+    }
 }
 
 // go to previous statement on button click
@@ -94,7 +110,7 @@ function previousStatement(){
     currentSubject--
     if(currentSubject >=0){
         displayStatament();    
-    } else {
+    }else {
         currentSubject ++
     }
     console.log(currentSubject);
@@ -105,59 +121,39 @@ function skipStatements(){
     currentSubject++
     if(currentSubject < subjects.length){
         displayStatament();      
-    } else {
+    }else {
         currentSubject--
-        rememberChoice(subjects[currentSubject].myAnswer);
+        rememberChoice();
     }
 
     if ((subjects.length -1) == currentSubject){
         calculate();
-    }
-    console.log(currentSubject);
-}
-
-// this function saves your answer (which is pro/agree) and shows the next statement
-function agree(){
-    choice("pro");
-    if ((subjects.length -1) == currentSubject){
-        calculate();
-    } else {
-        currentSubject ++;
-        importantStatement.checked = false;
-        displayStatament(); 
+        displayResultButtons();
+        sortParties();
     }
     console.log(currentSubject);
 }
-
-// this function saves your answer and shows the next statement
-function neither(){
-    choice("none");
+ 
+function processAnswer(insert){
+    choice(insert);
     if ((subjects.length -1) == currentSubject){
         calculate();
-    } else {
+        displayResultButtons();
+        sortParties();
+    }else {
         currentSubject ++;
         displayStatament(); 
-        rememberChoice(subjects[currentSubject].myAnswer);
-    }
-    console.log(currentSubject);
-}
-
-// this function saves your answer (which is contra/disagree) and shows the next statement
-function disagree(){
-    choice("contra");
-    if ((subjects.length -1) == currentSubject){
-        calculate();
-
-    } else {
-        currentSubject ++;
-        importantStatement.checked = false;
-        displayStatament(); 
-        rememberChoice(subjects[currentSubject].myAnswer);
+        rememberChoice();
     }
     console.log(currentSubject);
 }
 
 // this function creates an array which will be stored with your answers
+/**
+ * this function creates an array which will be stored with your answers.
+ * 
+ * @param {subjects[currentSubject].myAnswer} this is your answer on the current statement.
+ */
 function choice(insert){
     subjects[currentSubject].myAnswer = insert;
     subjects[currentSubject].important = importantStatement.checked;
@@ -173,8 +169,13 @@ function rememberChoice(){
     }
 }
 
-// this function compares your answer on the statement with the opinion of the parties. If
-// your answer has the same value as the party, they get +1 point, if the statement is important, they get +2
+
+/**
+ * this function compares your answer with the opinion on a statement of all parties.
+ * If your opinion is the same as a party, that party gets 1 point, if you
+ * selected the checkbox, every party with the same opinion gets 2 points
+ * 
+ */
 function calculate(){
 
     subjects.forEach(subject => {
@@ -189,7 +190,6 @@ function calculate(){
             }
         });      
     });
-    result();
 }
 
 // this function filters all secular parties
@@ -198,11 +198,7 @@ function getSecularParties() {
 
     partyResults = parties.filter(party => {
         return party.secular == true;
-    });  
-    
-    activeButton(secular);
-    removeActiveButton(all);
-    removeActiveButton(big);
+    }); 
 }
 
 
@@ -211,10 +207,6 @@ function getAllParties() {
     partyResults = [];
 
     partyResults = parties;
-
-    activeButton(all);
-    removeActiveButton(big);
-    removeActiveButton(secular);
 }
 
 // this function selects all parties that are "big". This value is set within a var on row 4
@@ -224,26 +216,23 @@ function getBigParties() {
     partyResults = parties.filter(party => {
         return party.size >= partySize;
     });
-
-    activeButton(big);
-    removeActiveButton(secular);
-    removeActiveButton(all);
 }
 
 
 // this function sorts the parties from highest points to lowest
-function result(){
+function displayResultButtons(){
     hide(container);
     hide(skipStatement);
     hide(choiceBtns);
     show(seeResults);
     hide(backBtn);
-   
+}
+
+function sortParties(){
     parties.sort(function (a, b) {
         return b.points - a.points;
     });
     console.log(parties);
-
 }
 
 // this function lets you choose between the 3 filter options and shows the result of the filtered parties
@@ -255,18 +244,19 @@ function resultCalc(){
     hide(seeResults);
     show(uitslagen);
     hide(backBtn);
+    displayPartyResults();
+}
 
-    
+// this functions shows the results of the voting guide
+function displayPartyResults(){
     partyResults.forEach(party => {
         var percentage = 100 / subjects.length * party.points;
         if (percentage > 100){
-             var percentage = 100 / subjects.length * party.points / 2;
+            var percentage = 100 / subjects.length * party.points / 2;
         }
         var p = percentage.toFixed(0);
             partijen.innerHTML+=party.name + " " + p + "%" + "</br>";      
     });
-
-
 }
 
 

@@ -142,4 +142,9 @@ button#disagreeBtn:hover {
   text-decoration: underline;
   cursor: pointer;
 }
+
+.remember-btn {
+  border: solid 2px gray;
+  background-color: #008ad0 !important;
+}
 /*# sourceMappingURL=style.css.map */
