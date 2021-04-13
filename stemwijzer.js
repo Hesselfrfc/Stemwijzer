@@ -78,15 +78,14 @@ function clickStartBtn(){
 
     titleHeader.innerHTML = subjects[currentSubject].title;
     statementPara.innerHTML = subjects[currentSubject].statement;
+    console.log(currentSubject);
 }
 
 // this function displays the title and the statement of the current subject
 function displayStatament(){
     titleHeader.innerHTML = subjects[currentSubject].title;
     statementPara.innerHTML = subjects[currentSubject].statement;
-    // color buttons toevoegen bij teruggaan vraag
     colorBtn();
-
 }
 
 //this function checks if subjects[currentSubject].myAnswer has a value, if true
@@ -179,7 +178,7 @@ function rememberChoice(){
 function calculate(){
 
     subjects.forEach(subject => {
-        subject.parties.forEach(function(partyPar){
+        subject.parties.forEach(partyPar =>{
             if(subject.myAnswer == partyPar.position){
                 var scoreParty = parties.find(party => party.name == partyPar.name);
                 if(subject.important == true) {
@@ -196,6 +195,10 @@ function calculate(){
 function getSecularParties() {
     partyResults = [];
 
+    filterAll.classList.remove("remember-btn");
+    filterBig.classList.remove("remember-btn");
+    filterSecular.classList.add("remember-btn");
+
     partyResults = parties.filter(party => {
         return party.secular == true;
     }); 
@@ -206,12 +209,20 @@ function getSecularParties() {
 function getAllParties() {
     partyResults = [];
 
+    filterBig.classList.remove("remember-btn");
+    filterSecular.classList.remove("remember-btn");
+    filterAll.classList.add("remember-btn");
+
     partyResults = parties;
 }
 
 // this function selects all parties that are "big". This value is set within a var on row 4
 function getBigParties() {
     partyResults = [];
+
+    filterAll.classList.remove("remember-btn");
+    filterSecular.classList.remove("remember-btn");
+    filterBig.classList.add("remember-btn");
 
     partyResults = parties.filter(party => {
         return party.size >= partySize;
